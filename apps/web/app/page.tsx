@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 interface Stats {
-  totalSettlements: number;
+  settlements: number;
   decodedPct: number;
   uniqueSenders: number;
 }
@@ -21,16 +21,16 @@ async function fetchStats(): Promise<Stats | null> {
     if (!res.ok) return null;
     const body: unknown = await res.json();
     if (typeof body !== "object" || body === null) return null;
-    const { totalSettlements, decodedPct, uniqueSenders } =
+    const { settlements, decodedPct, uniqueSenders } =
       body as Partial<Stats>;
     if (
-      typeof totalSettlements !== "number" ||
+      typeof settlements !== "number" ||
       typeof decodedPct !== "number" ||
       typeof uniqueSenders !== "number"
     ) {
       return null;
     }
-    return { totalSettlements, decodedPct, uniqueSenders };
+    return { settlements, decodedPct, uniqueSenders };
   } catch {
     // API unreachable (indexer/api not running) — render the offline state.
     return null;
@@ -56,7 +56,7 @@ export default async function Home() {
             </div>
             <dl>
               <dt>settlements indexed</dt>
-              <dd>{integer.format(stats.totalSettlements)}</dd>
+              <dd>{integer.format(stats.settlements)}</dd>
               <dt>decoded</dt>
               <dd>{stats.decodedPct.toFixed(1)}%</dd>
               <dt>unique senders</dt>

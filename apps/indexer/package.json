@@ -1,0 +1,23 @@
+{
+  "name": "@observatory/indexer",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "ponder dev",
+    "start": "ponder start",
+    "codegen": "ponder codegen",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'no lint yet'"
+  },
+  "dependencies": {
+    "@observatory/shared": "workspace:*",
+    "hono": "^4.12.29",
+    "ponder": "^0.16.9",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

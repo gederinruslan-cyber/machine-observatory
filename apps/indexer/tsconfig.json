@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "types": ["node"]
+  },
+  "include": ["ponder-env.d.ts", "src", "abis", "ponder.config.ts", "ponder.schema.ts"]
+}

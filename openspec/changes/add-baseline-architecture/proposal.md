@@ -12,7 +12,7 @@ as requirements and scaffolds the skeleton so implementation changes build on ra
 
 - Adopt the Ponder-first stack: self-hosted Ponder (v0.16.x) + Postgres 16 as the single
   source of chain facts on Base; a separate Node enrichment worker for all off-chain work;
-  a standalone backend API service (Hono + drizzle over SQL views) separate from the
+  a standalone backend API service (NestJS + drizzle over SQL views) separate from the
   indexer; Next.js on Cloudflare as the frontend, talking only to the API.
 - Adopt the superset-indexing principle: index ALL USDC `AuthorizationUsed` events;
   x402 classification is a SQL join against a synced facilitator table, never an

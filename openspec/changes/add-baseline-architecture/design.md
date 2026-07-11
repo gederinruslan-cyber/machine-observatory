@@ -86,10 +86,13 @@ panel transcript facts verified against July-2026 docs and pricing.
    `Upgraded` events on ERC-8004 registries alert (ABI may change); Validation registry
    gated off on Base until its proxy leaves the placeholder impl.
 
-10. **Separate backend and frontend.** A standalone API service (`apps/api`, Hono +
+10. **Separate backend and frontend.** A standalone API service (`apps/api`, NestJS +
     drizzle reading the stable SQL views) owns all product endpoints: /agents/:id, /feed,
     /leaderboards, /digest — and is where auth, rate limiting, watchlists/alerts, the
-    future x402-paid API tier, and the MCP server land. The indexer process serves only
+    future x402-paid API tier, and the MCP server land. NestJS chosen (owner preference)
+    for its module system, guards/interceptors (natural home for API keys and rate
+    limits), and OpenAPI generation; the cost is a heavier baseline than Hono, acceptable
+    since the API runs on the root server, not edge. The indexer process serves only
     internal health/metrics; indexer redeploys and backfills never affect API
     availability. Frontend: Next.js (`apps/web`) on Cloudflare (free tier permits
     commercial use; Vercel Hobby does not), talking only to `apps/api`. Rationale over

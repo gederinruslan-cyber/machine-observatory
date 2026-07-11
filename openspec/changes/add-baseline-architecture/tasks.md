@@ -26,8 +26,9 @@
 - [ ] 4.2 Facilitator-candidate queue query + log-based alert stub
 
 ## 5. API skeleton (apps/api)
-- [ ] 5.1 Standalone Hono service + drizzle over the stable views schema; endpoints:
-      `/health`, `/stats` (live settlement count) — proves cross-schema reads
+- [ ] 5.1 Standalone NestJS service + drizzle over the stable views schema; endpoints:
+      `/health`, `/stats` (live settlement count) — proves cross-schema reads; OpenAPI
+      (Swagger module) enabled from day one
 - [ ] 5.2 Dockerfile + Compose entry; API stays up while indexer container restarts
 
 ## 6. Web skeleton (apps/web)

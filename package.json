@@ -2,6 +2,7 @@
   "name": "machine-observatory",
   "private": true,
   "scripts": {
+    "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
     "db:up": "docker compose up -d postgres",

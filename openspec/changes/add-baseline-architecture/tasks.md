@@ -32,7 +32,7 @@
 - [x] 5.2 Dockerfile + Compose entry; API stays up while indexer container restarts
 
 ## 6. Web skeleton (apps/web)
-- [ ] 6.1 Next.js app deployable to Cloudflare, one page rendering live settlement count
+- [x] 6.1 Next.js app deployable to Cloudflare, one page rendering live settlement count
       from apps/api (proves the full pipe)
 
 ## 7. CI

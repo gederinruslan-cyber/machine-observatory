@@ -17,5 +17,20 @@ services:
       timeout: 3s
       retries: 10
 
+  # Standalone product API (architecture spec: "API decoupled from indexer") —
+  # reads Postgres directly, so it keeps serving while the indexer is down.
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://observatory:observatory@postgres:5432/observatory
+      PORT: "3001"
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   pgdata:

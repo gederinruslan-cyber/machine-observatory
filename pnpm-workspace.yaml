@@ -2,4 +2,6 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
+  # Telemetry-only postinstall pulled in by @nestjs/cli — keep disabled.
+  '@scarf/scarf': false
   esbuild: true

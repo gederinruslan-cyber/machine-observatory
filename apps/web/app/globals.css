@@ -1,0 +1,112 @@
+:root {
+  --bg: #0b0e14;
+  --panel: #11151f;
+  --border: #232a38;
+  --text: #e6e9ef;
+  --muted: #8a93a6;
+  --accent: #6ee7b7;
+  --offline: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 560px;
+  padding: 24px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+}
+
+.card h1 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+
+.card .subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0 0 24px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status.online .dot {
+  background: var(--accent);
+}
+
+.status.online {
+  color: var(--accent);
+}
+
+.status.offline .dot {
+  background: var(--offline);
+}
+
+.status.offline {
+  color: var(--offline);
+}
+
+dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px 16px;
+  margin: 0;
+}
+
+dt {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+dd {
+  margin: 0;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.offline-note {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}

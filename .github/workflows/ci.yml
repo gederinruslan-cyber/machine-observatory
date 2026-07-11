@@ -5,8 +5,11 @@ on:
   push:
     branches: [main]
 
+# Three required lanes (quality spec: "Three-lane CI on every pull request"):
+# checks (lint/format/typecheck/unit), build, integration (real Postgres 16).
+
 jobs:
-  check:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,6 +20,61 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Ponder codegen (indexer types)
+        # codegen only emits types from ponder.schema.ts/config — never dials RPC.
         run: pnpm --filter @observatory/indexer codegen
-      - run: pnpm typecheck
+        env:
+          PONDER_RPC_URL_8453: http://127.0.0.1:8545
       - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
+      - name: Unit tests (no database)
+        run: pnpm test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: API build (nest)
+        run: pnpm --filter @observatory/api build
+      - name: Web build (Next.js + OpenNext Cloudflare bundle)
+        # opennextjs-cloudflare build runs `next build` and produces .open-next/.
+        run: pnpm --filter @observatory/web exec opennextjs-cloudflare build
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: observatory
+          POSTGRES_PASSWORD: observatory
+          POSTGRES_DB: observatory
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U observatory"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://observatory:observatory@localhost:5432/observatory
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Apply schema init + settlements fixture
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f docker/postgres-init/01-enrichment-schema.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f scripts/ci/seed.sql
+      - name: Integration tests (real DATABASE_URL)
+        run: pnpm test:integration

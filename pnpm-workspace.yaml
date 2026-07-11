@@ -3,7 +3,7 @@ packages:
   - "packages/*"
 allowBuilds:
   # Telemetry-only postinstall pulled in by @nestjs/cli — keep disabled.
-  '@scarf/scarf': false
+  "@scarf/scarf": false
   # facilitators → x402 transitive natives: JS fallbacks exist, builds not needed.
   "@coinbase/x402": false
   bufferutil: false
@@ -12,3 +12,5 @@ allowBuilds:
   utf-8-validate: false
   sharp: true
   workerd: true
+  # Native binding check for vitest's Nest/SWC transform — needs its postinstall.
+  "@swc/core": true

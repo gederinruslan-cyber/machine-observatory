@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  // Build compiles src only — keeps dist/main.js at the path Dockerfile/compose expect.
+  "include": ["src"]
+}

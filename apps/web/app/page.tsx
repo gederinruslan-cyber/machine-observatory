@@ -21,8 +21,7 @@ async function fetchStats(): Promise<Stats | null> {
     if (!res.ok) return null;
     const body: unknown = await res.json();
     if (typeof body !== "object" || body === null) return null;
-    const { settlements, decodedPct, uniqueSenders } =
-      body as Partial<Stats>;
+    const { settlements, decodedPct, uniqueSenders } = body as Partial<Stats>;
     if (
       typeof settlements !== "number" ||
       typeof decodedPct !== "number" ||

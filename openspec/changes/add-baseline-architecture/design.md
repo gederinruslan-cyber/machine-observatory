@@ -86,10 +86,16 @@ panel transcript facts verified against July-2026 docs and pricing.
    `Upgraded` events on ERC-8004 registries alert (ABI may change); Validation registry
    gated off on Base until its proxy leaves the placeholder impl.
 
-10. **API & frontend.** Ponder's built-in Hono server serves REST (drizzle over stable
-    views): /agents/:id, /feed, /leaderboards, /digest. `ponder serve` replicas scale reads
-    if needed. Frontend: Next.js on Cloudflare (free tier permits commercial use; Vercel
-    Hobby does not).
+10. **Separate backend and frontend.** A standalone API service (`apps/api`, Hono +
+    drizzle reading the stable SQL views) owns all product endpoints: /agents/:id, /feed,
+    /leaderboards, /digest — and is where auth, rate limiting, watchlists/alerts, the
+    future x402-paid API tier, and the MCP server land. The indexer process serves only
+    internal health/metrics; indexer redeploys and backfills never affect API
+    availability. Frontend: Next.js (`apps/web`) on Cloudflare (free tier permits
+    commercial use; Vercel Hobby does not), talking only to `apps/api`. Rationale over
+    Ponder's built-in server: product reads are cross-schema joins (chain facts ×
+    enrichment) that don't belong to the indexer, and monetization features must not
+    require a later migration out of the indexing process.
 
 11. **Hosting.** One EU root server (Netcup RS 2000-class or Hetzner CX43, ~€17–22/mo,
     NVMe ≥512GB preferred for ponder_sync growth) running Postgres 16 + Ponder + worker via

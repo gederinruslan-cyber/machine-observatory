@@ -1,7 +1,8 @@
 # Tasks: add-baseline-architecture
 
 ## 1. Monorepo skeleton
-- [ ] 1.1 pnpm workspace: `apps/indexer`, `apps/worker`, `apps/web`, `packages/shared`
+- [ ] 1.1 pnpm workspace: `apps/indexer`, `apps/worker`, `apps/api`, `apps/web`,
+      `packages/shared`
 - [ ] 1.2 Shared TS config, ESLint, prettier; `packages/shared` exports chain constants
       (USDC address, event topics, registry addresses, CAIP-2 ids) sourced from
       docs/research values
@@ -24,15 +25,20 @@
       `facilitators` npm package into `enrichment.facilitator_wallets`
 - [ ] 4.2 Facilitator-candidate queue query + log-based alert stub
 
-## 5. Web skeleton (apps/web)
-- [ ] 5.1 Next.js app deployable to Cloudflare, one page rendering live settlement count
-      from the API (proves the full pipe)
+## 5. API skeleton (apps/api)
+- [ ] 5.1 Standalone Hono service + drizzle over the stable views schema; endpoints:
+      `/health`, `/stats` (live settlement count) — proves cross-schema reads
+- [ ] 5.2 Dockerfile + Compose entry; API stays up while indexer container restarts
 
-## 6. CI
-- [ ] 6.1 GitHub Actions: typecheck + lint + indexer schema build on PR
+## 6. Web skeleton (apps/web)
+- [ ] 6.1 Next.js app deployable to Cloudflare, one page rendering live settlement count
+      from apps/api (proves the full pipe)
 
-## 7. Verification
-- [ ] 7.1 Reality check: 15-min live run, settlements decoded (buyer/seller/amount) for
+## 7. CI
+- [ ] 7.1 GitHub Actions: typecheck + lint + indexer schema build on PR
+
+## 8. Verification
+- [ ] 8.1 Reality check: 15-min live run, settlements decoded (buyer/seller/amount) for
       ≥95% of rows via calldata path; `needs_receipt` fallback exercised on at least one
       batched tx
-- [ ] 7.2 `openspec validate add-baseline-architecture` passes; archive after deploy
+- [ ] 8.2 `openspec validate add-baseline-architecture` passes; archive after deploy

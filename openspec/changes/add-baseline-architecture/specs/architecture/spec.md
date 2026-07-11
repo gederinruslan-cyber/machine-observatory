@@ -99,6 +99,15 @@ continuity.
 - **WHEN** daily counts diverge from x402scan by more than 1%
 - **THEN** an operator alert is raised with the divergent block range
 
+### Requirement: API decoupled from indexer
+Product-facing endpoints SHALL be served by a standalone API service reading the stable
+SQL views; the indexer process SHALL expose only internal health/metrics. The frontend
+SHALL communicate exclusively with the API service.
+
+#### Scenario: Indexer redeploy during traffic
+- **WHEN** the indexer is restarting, backfilling, or re-syncing
+- **THEN** API endpoints continue serving from Postgres without interruption
+
 ### Requirement: Cost and hosting envelope
 The launch deployment SHALL run on a single EU root server (Postgres colocated with the
 indexer) with Cloudflare-hosted frontend, with total recurring cost under $100/month, and

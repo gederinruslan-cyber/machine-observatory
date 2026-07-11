@@ -1,20 +1,20 @@
 # Tasks: add-baseline-architecture
 
 ## 1. Monorepo skeleton
-- [ ] 1.1 pnpm workspace: `apps/indexer`, `apps/worker`, `apps/api`, `apps/web`,
+- [x] 1.1 pnpm workspace: `apps/indexer`, `apps/worker`, `apps/api`, `apps/web`,
       `packages/shared`
-- [ ] 1.2 Shared TS config, ESLint, prettier; `packages/shared` exports chain constants
+- [x] 1.2 Shared TS config, ESLint, prettier; `packages/shared` exports chain constants
       (USDC address, event topics, registry addresses, CAIP-2 ids) sourced from
       docs/research values
-- [ ] 1.3 `.env.example` (RPC URLs, DATABASE_URL) and README architecture section
+- [x] 1.3 `.env.example` (RPC URLs, DATABASE_URL) and README architecture section
 
 ## 2. Local infrastructure
-- [ ] 2.1 Docker Compose: Postgres 16 with `enrichment` schema init script
-- [ ] 2.2 Makefile/package scripts: `dev`, `db:up`, `typecheck`, `lint`
+- [x] 2.1 Docker Compose: Postgres 16 with `enrichment` schema init script
+- [x] 2.2 Makefile/package scripts: `dev`, `db:up`, `typecheck`, `lint`
 
 ## 3. Indexer skeleton (apps/indexer)
-- [ ] 3.1 `ponder create` app pinned to v0.16.x, Base chain config, startBlock near head
-- [ ] 3.2 Minimal proof handler: USDC `AuthorizationUsed` source recording
+- [x] 3.1 `ponder create` app pinned to v0.16.x, Base chain config, startBlock near head
+- [x] 3.2 Minimal proof handler: USDC `AuthorizationUsed` source recording
       (chain_id, tx_hash, tx_from, authorizer, block) — validates event.transaction.from
       and end-to-end write path; runs for 15 min against live Base and row counts match a
       basescan spot check
@@ -39,7 +39,7 @@
 - [ ] 7.1 GitHub Actions: typecheck + lint + indexer schema build on PR
 
 ## 8. Verification
-- [ ] 8.1 Reality check: 15-min live run, settlements decoded (buyer/seller/amount) for
+- [x] 8.1 Reality check: 15-min live run, settlements decoded (buyer/seller/amount) for
       ≥95% of rows via calldata path; `needs_receipt` fallback exercised on at least one
       batched tx
 - [ ] 8.2 `openspec validate add-baseline-architecture` passes; archive after deploy

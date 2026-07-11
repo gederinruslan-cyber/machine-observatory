@@ -6,5 +6,11 @@
     "verbatimModuleSyntax": true,
     "types": ["node"]
   },
-  "include": ["ponder-env.d.ts", "src", "abis", "ponder.config.ts", "ponder.schema.ts"]
+  "include": [
+    "ponder-env.d.ts",
+    "src",
+    "abis",
+    "ponder.config.ts",
+    "ponder.schema.ts"
+  ]
 }

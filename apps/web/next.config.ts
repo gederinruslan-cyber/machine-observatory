@@ -10,4 +10,5 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 
 // Makes Cloudflare bindings available during `next dev` (per @opennextjs/cloudflare docs).
-initOpenNextCloudflareForDev();
+// Fire-and-forget by design — config loading must not block on binding setup.
+void initOpenNextCloudflareForDev();

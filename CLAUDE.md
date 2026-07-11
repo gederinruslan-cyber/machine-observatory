@@ -26,6 +26,28 @@ deltas into `openspec/specs/` — read those specs for context before any work.
   speculation/wash loops (e.g., the PING pay-to-mint frenzy). Our numbers must be
   believable where competitors count spam.
 
+## Quality gates
+
+Before any PR, these must be green locally (run `pnpm --filter @observatory/indexer codegen`
+first so indexer types exist):
+
+- `pnpm lint` — ESLint 9 flat config, shared at the root; no stubs, no disabled rules
+  without an inline justification
+- `pnpm typecheck`
+- `pnpm test` — vitest, all packages; decode tests use real Base calldata fixtures
+- `pnpm format:check` — prettier owns formatting
+
+CI enforces three required lanes on every PR: checks (lint + format + typecheck + unit
+tests), build (Nest build + Next.js/OpenNext bundle), and integration (Postgres 16
+service container + `pnpm test:integration`). `pnpm test:integration` also runs against
+the local DB (`DATABASE_URL=postgresql://observatory:observatory@localhost:5439/observatory`)
+and skips gracefully when `DATABASE_URL` is unset.
+
+Code-review passes MUST invoke both custom review agents on the diff via the Agent tool:
+`spec-reviewer` (conformance with openspec/specs/ + active change deltas: superset
+indexing, two schema domains, deterministic handlers, read-only API, CAIP-2 keys) and
+`chain-reviewer` (every address/topic/selector traced to docs/research/*.md).
+
 ## Conventions
 
 - TypeScript throughout; stack specifics live in `openspec/specs/` once the

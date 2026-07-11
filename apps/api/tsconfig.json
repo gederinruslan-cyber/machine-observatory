@@ -10,5 +10,6 @@
     "sourceMap": true,
     "types": ["node"]
   },
-  "include": ["src"]
+  // Tests are typechecked/linted but excluded from `nest build` (tsconfig.build.json).
+  "include": ["src", "test"]
 }

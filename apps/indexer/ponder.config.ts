@@ -18,7 +18,7 @@ export default createConfig({
       address: USDC_BASE,
       // Recent block for the skeleton proof run; full history arrives via the
       // payments_archive backfill seed (architecture spec: "Historical backfill").
-      startBlock: 48506300,
+      startBlock: 48509900,
       filter: { event: "AuthorizationUsed", args: {} },
     },
   },

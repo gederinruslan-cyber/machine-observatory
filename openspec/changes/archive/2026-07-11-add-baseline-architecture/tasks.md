@@ -18,7 +18,7 @@
       (chain_id, tx_hash, tx_from, authorizer, block) — validates event.transaction.from
       and end-to-end write path; runs for 15 min against live Base and row counts match a
       basescan spot check
-- [ ] 3.3 Stable views schema + `--views-schema` wiring verified by two consecutive deploys
+- [x] 3.3 Stable views schema + `--views-schema` wiring verified by two consecutive deploys
 
 ## 4. Worker skeleton (apps/worker)
 - [x] 4.1 node-cron scaffold with one real job: daily facilitator sync from the
@@ -36,10 +36,10 @@
       from apps/api (proves the full pipe)
 
 ## 7. CI
-- [ ] 7.1 GitHub Actions: typecheck + lint + indexer schema build on PR
+- [x] 7.1 GitHub Actions: typecheck + lint + indexer schema build on PR
 
 ## 8. Verification
 - [x] 8.1 Reality check: 15-min live run, settlements decoded (buyer/seller/amount) for
       ≥95% of rows via calldata path; `needs_receipt` fallback exercised on at least one
       batched tx
-- [ ] 8.2 `openspec validate add-baseline-architecture` passes; archive after deploy
+- [x] 8.2 `openspec validate add-baseline-architecture` passes; archive after deploy

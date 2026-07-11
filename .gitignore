@@ -7,3 +7,4 @@ dist/
 .ponder/
 generated/
 ponder-env.d.ts
+.claude/worktrees/

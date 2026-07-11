@@ -21,9 +21,9 @@
 - [ ] 3.3 Stable views schema + `--views-schema` wiring verified by two consecutive deploys
 
 ## 4. Worker skeleton (apps/worker)
-- [ ] 4.1 node-cron scaffold with one real job: daily facilitator sync from the
+- [x] 4.1 node-cron scaffold with one real job: daily facilitator sync from the
       `facilitators` npm package into `enrichment.facilitator_wallets`
-- [ ] 4.2 Facilitator-candidate queue query + log-based alert stub
+- [x] 4.2 Facilitator-candidate queue query + log-based alert stub
 
 ## 5. API skeleton (apps/api)
 - [x] 5.1 Standalone NestJS service + drizzle over the stable views schema; endpoints:

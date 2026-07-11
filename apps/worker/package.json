@@ -1,0 +1,24 @@
+{
+  "name": "@observatory/worker",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "RUN_ON_STARTUP=true tsx src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'no lint yet'"
+  },
+  "dependencies": {
+    "@observatory/shared": "workspace:*",
+    "facilitators": "^0.0.10",
+    "node-cron": "^4.2.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.11.10",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}

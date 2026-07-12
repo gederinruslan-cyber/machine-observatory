@@ -18,7 +18,8 @@ async function fetchStats(): Promise<Stats | null> {
   try {
     const res = await fetch(`${API_URL}/stats`, {
       cache: "no-store",
-      signal: AbortSignal.timeout(5_000),
+      // A hung API must not hold the whole page hostage.
+      signal: AbortSignal.timeout(1_500),
     });
     if (!res.ok) return null;
     const body: unknown = await res.json();
@@ -74,9 +75,15 @@ export default async function Home() {
             <span className="ring r1" />
             <span className="ring r2" />
             <span className="ring r3" />
-            <span className="body b1" />
-            <span className="body b2" />
-            <span className="body b3" />
+            <span className="carrier c1">
+              <span className="body" />
+            </span>
+            <span className="carrier c2">
+              <span className="body amber-body" />
+            </span>
+            <span className="carrier c3">
+              <span className="body" />
+            </span>
           </div>
 
           <p className="masthead reveal">
@@ -101,11 +108,7 @@ export default async function Home() {
             the machine economy.
           </p>
 
-          <div className="hero-log reveal d5">
-            <ObservationLog />
-          </div>
-
-          <div className="cta-row reveal d6">
+          <div className="cta-row reveal d5">
             <a
               className="cta primary"
               href="https://github.com/gederinruslan-cyber/machine-observatory"
@@ -115,6 +118,10 @@ export default async function Home() {
             <span className="cta-note">
               dossiers &amp; dispatch launching soon
             </span>
+          </div>
+
+          <div className="hero-log reveal d6">
+            <ObservationLog />
           </div>
         </header>
 
@@ -126,7 +133,9 @@ export default async function Home() {
                 <span className="stat-n">
                   {integer.format(stats.settlements)}
                 </span>
-                <span className="stat-l">settlements in the index</span>
+                <span className="stat-l">
+                  settlements indexed · since jul 2026
+                </span>
               </div>
               <div className="stat">
                 <span className="stat-n">{stats.decodedPct.toFixed(1)}%</span>

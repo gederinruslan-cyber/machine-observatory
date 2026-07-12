@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 // Field notes drawn from real settlements in the observatory's index (Base,
-// July 2026) — sampled and paraphrased, not a live socket. The landing page
-// labels them accordingly.
+// July 2026) — sampled and paraphrased, not a live socket. The card labels
+// them as field notes and the dot stays static for the same reason.
 const OBSERVATIONS = [
   {
     tag: "settlement",
@@ -28,22 +28,26 @@ const OBSERVATIONS = [
   },
   {
     tag: "census",
-    text: "150+ facilitator wallets across 30 operators; Coinbase alone rotates them in batches",
+    text: "the ecosystem registry lists 150+ facilitator wallets across 30 operators — 51 caught in the act by our index so far",
   },
 ] as const;
 
-const CYCLE_MS = 4_000;
+const CYCLE_MS = 8_000;
 
 export function ObservationLog() {
   const [head, setHead] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
+    // Content swaps are motion too — honor the preference, not just the CSS.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (paused) return;
     const id = setInterval(
       () => setHead((h) => (h + 1) % OBSERVATIONS.length),
       CYCLE_MS,
     );
     return () => clearInterval(id);
-  }, []);
+  }, [paused]);
 
   // Newest entry on top, two prior entries fading below it.
   const visible = [0, 1, 2].map(
@@ -54,19 +58,21 @@ export function ObservationLog() {
   );
 
   return (
-    <div className="log" aria-live="polite">
+    <div
+      className="log"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div className="log-head">
         <span className="log-dot" aria-hidden />
         <span>observation log</span>
-        <span className="log-source">from the index · Base</span>
+        <span className="log-source">field notes · from the index</span>
       </div>
       <ol className="log-entries">
         {visible.map((entry, i) => (
-          <li
-            // head in the key forces a re-mount, restarting the entry animation
-            key={`${head}-${i}`}
-            className={`log-entry depth-${i}`}
-          >
+          // Keyed by content: surviving entries keep their nodes (no re-mount,
+          // no re-announce); only the incoming entry mounts and animates.
+          <li key={entry?.text ?? i} className={`log-entry depth-${i}`}>
             <span className="log-tag">{entry?.tag}</span>
             <span className="log-text">{entry?.text}</span>
           </li>

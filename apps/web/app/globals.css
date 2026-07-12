@@ -23,6 +23,8 @@ html,
 body {
   margin: 0;
   padding: 0;
+  /* clip, not hidden: the orbital bleed must not create horizontal scroll */
+  overflow-x: clip;
 }
 
 body {
@@ -43,6 +45,8 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* fallback fonts can't render 520-560 weights — no faux bold */
+  font-synthesis: none;
 }
 
 ::selection {
@@ -78,7 +82,9 @@ a {
   position: relative;
   padding: clamp(48px, 8vh, 96px) 0 clamp(40px, 6vh, 72px);
   border-bottom: 1px solid var(--hairline);
-  overflow: visible;
+  /* the orbital bleed clips at the hero box — no document overflow anywhere,
+     including screenshot/unfurl services that ignore overflow-x on the root */
+  overflow: hidden;
 }
 
 .masthead {
@@ -87,7 +93,7 @@ a {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--phosphor);
-  margin: 0 0 clamp(28px, 5vh, 56px);
+  margin: 0 0 clamp(20px, 3.5vh, 36px);
 }
 
 .masthead em {
@@ -133,7 +139,7 @@ a {
 /* orbital backdrop — the instrument, always turning */
 .orbits {
   position: absolute;
-  top: 50%;
+  top: 42%;
   right: -180px;
   width: 640px;
   height: 640px;
@@ -163,11 +169,38 @@ a {
   inset: 190px;
   border-style: solid;
   border-color: var(--hairline-soft);
-  animation: spin 200s linear infinite;
+  /* solid ring: rotation is invisible, so it doesn't animate */
+}
+
+/* invisible spinners matching each ring — bodies actually ride the orbits */
+.carrier {
+  position: absolute;
+  border-radius: 50%;
+  animation: spin linear infinite;
+}
+
+.c1 {
+  inset: 0;
+  animation-duration: 140s;
+}
+
+.c2 {
+  inset: 90px;
+  animation-duration: 90s;
+  animation-direction: reverse;
+}
+
+.c3 {
+  inset: 190px;
+  animation-duration: 200s;
+  animation-delay: -60s;
 }
 
 .body {
   position: absolute;
+  top: -3.5px;
+  left: 50%;
+  margin-left: -3.5px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -176,23 +209,10 @@ a {
   animation: pulse 3.2s ease-in-out infinite;
 }
 
-.b1 {
-  top: 0;
-  left: 50%;
-}
-
-.b2 {
-  top: 50%;
-  left: 90px;
+.amber-body {
   background: var(--amber);
   box-shadow: 0 0 12px 2px rgba(226, 166, 92, 0.35);
   animation-delay: 1.1s;
-}
-
-.b3 {
-  bottom: 96px;
-  right: 120px;
-  animation-delay: 2.2s;
 }
 
 /* observation log card */
@@ -233,13 +253,15 @@ a {
   height: 7px;
   border-radius: 50%;
   background: var(--phosphor);
-  animation: pulse 2.4s ease-in-out infinite;
+  /* static on purpose: these are field notes, not a live socket */
 }
 
 .log-entries {
   list-style: none;
   margin: 0;
   padding: 0;
+  /* three two-line entries — cycling must not jitter the layout below */
+  min-height: 178px;
 }
 
 .log-entry {
@@ -266,7 +288,7 @@ a {
 }
 
 .log-entry.depth-2 {
-  opacity: 0.28;
+  opacity: 0.4;
 }
 
 .log-tag {
@@ -310,6 +332,12 @@ a {
 .cta.primary:hover {
   background: var(--phosphor);
   transform: translateY(-1px);
+}
+
+.cta:focus-visible,
+.footer-row a:focus-visible {
+  outline: 2px solid var(--phosphor);
+  outline-offset: 3px;
 }
 
 .cta-note {
@@ -595,9 +623,9 @@ a {
   }
 
   .ring,
+  .carrier,
   .body,
-  .pulse,
-  .log-dot {
+  .pulse {
     animation: none;
   }
 }
@@ -629,5 +657,12 @@ a {
 
   .wire-arrow {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* natural wrapping beats orphaned single words at phone widths */
+  .thesis span {
+    display: inline;
   }
 }

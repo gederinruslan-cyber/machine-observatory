@@ -16,6 +16,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
   title: "Machine Observatory — who is watching the machine economy?",
   description:
     "AI agents are paying each other on-chain right now. Machine Observatory is the identity and narrative layer over the agent economy: dossiers, a narrated feed, and the weekly dispatch.",

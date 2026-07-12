@@ -62,12 +62,68 @@ const PILLARS = [
   },
 ] as const;
 
+// Real, verifiable ecosystem milestones — see docs/research/ for sourcing.
+const CHRONICLE = [
+  {
+    date: "dec 2024",
+    title: "First light for machine money",
+    body: "The earliest known x402 facilitator begins settling agent payments on Base — months before anyone is watching.",
+  },
+  {
+    date: "may 2025",
+    title: "Coinbase turns on the rail",
+    body: "x402 launches publicly: HTTP 402 quotes, signed USDC authorizations, fee-free settlement on Base through the CDP facilitator.",
+  },
+  {
+    date: "late 2025",
+    title: "The PING frenzy",
+    body: "A pay-to-mint token drives 150,000+ settlements in its first month; weekly volume spikes over 10,000% before cooling. The machine economy has its first speculative mania.",
+  },
+  {
+    date: "jan 2026",
+    title: "Identity arrives",
+    body: "ERC-8004 registries deploy to mainnet — the same address on every chain. x402 crosses 100 million cumulative payments on Base the same quarter.",
+  },
+  {
+    date: "apr 2026",
+    title: "The standard grows up",
+    body: "Coinbase contributes x402 to the Linux Foundation. AWS, Cloudflare, Anthropic and Circle are among 20+ founding members of the x402 Foundation.",
+  },
+  {
+    date: "jun 2026",
+    title: "The edge learns to charge",
+    body: "AWS CloudFront and Cloudflare ship per-request agent payments at the edge — any website can now charge a machine in USDC.",
+  },
+  {
+    date: "jul 2026",
+    title: "First light at the observatory",
+    body: "Our telescope opens on Base: every settlement indexed and classified. Dossiers and the narrated feed are on the bench.",
+  },
+] as const;
+
 export default async function Home() {
   const stats = await fetchStats();
 
   return (
     <>
       <div className="grain" aria-hidden />
+
+      <nav className="topnav" aria-label="sections">
+        <span className="topnav-brand">M·O</span>
+        <div className="topnav-links">
+          <a href="#field-guide">field guide</a>
+          <a href="#chronicle">chronicle</a>
+          <a href="#publications">publications</a>
+          <a href="#instrument">the instrument</a>
+        </div>
+        <a
+          className="topnav-cta"
+          href="https://github.com/gederinruslan-cyber/machine-observatory"
+        >
+          github ↗
+        </a>
+      </nav>
+
       <main className="site">
         {/* ---------------------------------------------------------- hero */}
         <header className="hero">
@@ -178,8 +234,123 @@ export default async function Home() {
           )}
         </section>
 
+        {/* --------------------------------------------------- field guide */}
+        <section className="guide" id="field-guide">
+          <h2 className="section-title">
+            A field guide to the <em>machine economy</em>
+          </h2>
+          <p className="section-lede">
+            Two young protocols make it possible: one moves the money, one names
+            the machines. Watching both at once is the whole idea.
+          </p>
+
+          <div className="guide-grid">
+            <article className="guide-card">
+              <div className="guide-plate">
+                <span className="guide-name">x402</span>
+                <span className="guide-role">the payment rail</span>
+              </div>
+              <p>
+                HTTP has reserved status code <em>402 Payment Required</em>{" "}
+                since the nineties. x402 finally uses it: when an agent requests
+                a paid API, the server answers with a price quote; the agent
+                signs a USDC authorization and retries; a facilitator settles it
+                on Base. Sub-cent amounts, seconds to settle — no accounts, no
+                cards, no humans.
+              </p>
+              <pre className="guide-diagram" aria-label="x402 payment flow">
+                {`GET /forecast
+  ← 402 Payment Required · quote: $0.004 USDC
+  → signed authorization · retry
+  ← 200 OK · settled on Base`}
+              </pre>
+              <p className="guide-foot">
+                An open standard under the Linux Foundation since April 2026 —
+                AWS, Cloudflare, Anthropic and Circle among its members.
+              </p>
+            </article>
+
+            <article className="guide-card">
+              <div className="guide-plate">
+                <span className="guide-name">ERC-8004</span>
+                <span className="guide-role">the identity layer</span>
+              </div>
+              <p>
+                Three on-chain registries give an agent a portable self:{" "}
+                <em>Identity</em> (who it is, what services it offers),{" "}
+                <em>Reputation</em> (feedback from the agents and humans it
+                traded with), and <em>Validation</em> (third-party
+                attestations). Deployed at the same address on every chain.
+              </p>
+              <pre
+                className="guide-diagram"
+                aria-label="identity to payments join"
+              >
+                {`agent #23175
+  → identity registry · agent card
+  → agentWallet 0x…
+  → its x402 payment history`}
+              </pre>
+              <p className="guide-foot">
+                The reserved <em>agentWallet</em> key links an identity to the
+                wallet that gets paid — the join that turns raw payments into
+                dossiers. It is the seam this observatory is built on.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        {/* ----------------------------------------------------- chronicle */}
+        <section className="chronicle" id="chronicle">
+          <h2 className="section-title">
+            The <em>chronicle</em>
+          </h2>
+          <p className="section-lede">
+            A short history of an economy that is eighteen months old. Every
+            entry is a real, checkable event.
+          </p>
+          <ol className="chron-list">
+            {CHRONICLE.map((c) => (
+              <li className="chron-entry" key={c.date + c.title}>
+                <span className="chron-date">{c.date}</span>
+                <div className="chron-body">
+                  <h3>{c.title}</h3>
+                  <p>{c.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* --------------------------------------------- ecosystem numbers */}
+        <section className="eco" aria-label="ecosystem figures">
+          <div className="eco-grid">
+            <div className="eco-stat">
+              <span className="eco-n">169M</span>
+              <span className="eco-l">payments in x402&apos;s first year</span>
+            </div>
+            <div className="eco-stat">
+              <span className="eco-n">590k</span>
+              <span className="eco-l">buyers · 100k sellers</span>
+            </div>
+            <div className="eco-stat">
+              <span className="eco-n">357k+</span>
+              <span className="eco-l">registered agent identities</span>
+            </div>
+            <div className="eco-stat">
+              <span className="eco-n">24+</span>
+              <span className="eco-l">chains with ERC-8004 registries</span>
+            </div>
+          </div>
+          <p className="eco-note">
+            Ecosystem figures as reported by Coinbase and community trackers,
+            2026. Distinct from our own index counts above — we only vouch for
+            what we&apos;ve measured ourselves.
+          </p>
+        </section>
+
         {/* ------------------------------------------------------- pillars */}
-        <section className="pillars">
+        <section className="pillars" id="publications">
           <h2 className="section-title">
             What the observatory <em>publishes</em>
           </h2>
@@ -198,7 +369,7 @@ export default async function Home() {
         </section>
 
         {/* -------------------------------------------------- how it works */}
-        <section className="wire">
+        <section className="wire" id="instrument">
           <h2 className="section-title">
             The <em>instrument</em>
           </h2>

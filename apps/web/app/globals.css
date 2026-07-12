@@ -27,6 +27,20 @@ body {
   overflow-x: clip;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 64px;
+}
+
 body {
   background:
     radial-gradient(
@@ -75,6 +89,64 @@ a {
   padding: 0 clamp(20px, 4vw, 48px);
   position: relative;
   z-index: 1;
+}
+
+/* ----------------------------------------------------------------- topnav */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 14px clamp(20px, 4vw, 48px);
+  background: rgba(10, 13, 18, 0.82);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--hairline-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.topnav-brand {
+  color: var(--amber);
+  letter-spacing: 0.3em;
+}
+
+.topnav-links {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topnav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.topnav-links a,
+.topnav-cta {
+  color: var(--paper-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.topnav-links a:hover,
+.topnav-cta:hover {
+  color: var(--phosphor);
+}
+
+.topnav-links a:focus-visible,
+.topnav-cta:focus-visible {
+  outline: 2px solid var(--phosphor);
+  outline-offset: 3px;
+}
+
+.topnav-cta {
+  margin-left: auto;
+  color: var(--paper);
 }
 
 /* ------------------------------------------------------------------- hero */
@@ -396,6 +468,210 @@ a {
   animation: pulse 2.4s ease-in-out infinite;
 }
 
+/* ------------------------------------------------------------ field guide */
+.guide {
+  padding: clamp(56px, 9vh, 104px) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.section-lede {
+  font-size: clamp(15px, 1.5vw, 18px);
+  color: var(--paper-dim);
+  max-width: 56ch;
+  margin: -28px 0 44px;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--hairline-soft);
+  border: 1px solid var(--hairline-soft);
+}
+
+.guide-card {
+  background: var(--ink);
+  padding: 30px 28px 34px;
+  /* let the diagram <pre> scroll internally instead of widening the track */
+  min-width: 0;
+}
+
+.guide-plate {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--hairline-soft);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.guide-name {
+  font-family: var(--mono);
+  font-size: 22px;
+  color: var(--phosphor);
+  letter-spacing: 0.04em;
+}
+
+.guide-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid rgba(226, 166, 92, 0.35);
+  padding: 3px 8px;
+}
+
+.guide-card > p {
+  font-size: 15px;
+  color: var(--paper-dim);
+  margin: 0 0 20px;
+}
+
+.guide-card > p em {
+  color: var(--paper);
+}
+
+.guide-diagram {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--phosphor);
+  background: var(--ink-raise);
+  border: 1px solid var(--hairline-soft);
+  border-left: 2px solid var(--phosphor-dim);
+  padding: 16px 18px;
+  margin: 0 0 20px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.guide-foot {
+  font-size: 13.5px;
+  color: var(--paper-dim);
+  margin: 0;
+  padding-top: 4px;
+}
+
+.guide-foot em {
+  color: var(--amber);
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+/* -------------------------------------------------------------- chronicle */
+.chronicle {
+  padding: clamp(56px, 9vh, 104px) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.chron-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--hairline);
+}
+
+.chron-entry {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  padding: 22px 0 22px 26px;
+  position: relative;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.chron-entry:last-child {
+  border-bottom: none;
+}
+
+.chron-entry::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 30px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 1px solid var(--paper-dim);
+}
+
+.chron-entry:last-child::before {
+  background: var(--amber);
+  border-color: var(--amber);
+  box-shadow: 0 0 10px 2px rgba(226, 166, 92, 0.35);
+}
+
+.chron-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+  padding-top: 3px;
+}
+
+.chron-body h3 {
+  font-family: var(--serif);
+  font-weight: 540;
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+
+.chron-body p {
+  font-size: 14.5px;
+  color: var(--paper-dim);
+  margin: 0;
+  max-width: 64ch;
+}
+
+/* ------------------------------------------------------- ecosystem band */
+.eco {
+  padding: clamp(40px, 6vh, 64px) 0;
+  border-bottom: 1px solid var(--hairline);
+  background: linear-gradient(rgba(226, 166, 92, 0.035), transparent 70%);
+}
+
+.eco-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.eco-stat {
+  border-top: 2px solid rgba(226, 166, 92, 0.4);
+  padding-top: 14px;
+}
+
+.eco-n {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 540;
+  font-size: clamp(30px, 3.6vw, 44px);
+  color: var(--amber);
+  line-height: 1;
+}
+
+.eco-l {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.eco-note {
+  margin: 28px 0 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--paper-dim);
+  max-width: 70ch;
+}
+
 /* ---------------------------------------------------------------- pillars */
 .pillars {
   padding: clamp(56px, 9vh, 104px) 0;
@@ -657,6 +933,20 @@ a {
 
   .wire-arrow {
     display: none;
+  }
+
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .eco-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chron-entry {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding-left: 20px;
   }
 }
 
